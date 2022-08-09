@@ -19,10 +19,12 @@ namespace Sistema.Datos
         private Conexion()
         {
             this.Base = "dbsistema";
-            this.Servidor = "DESKTOP-54P5F6N";
+            //this.Servidor = "DESKTOP-54P5F6N"; //Casa
+            this.Servidor = "DESKTOP-DO5T73H"; //Jale
             this.Usuario = "sa";
-            this.Clave = "1324569";
-            this.Seguridad = true;
+            this.Clave = "1234569";
+            //this.Seguridad = true; //Casa
+            this.Seguridad = false; //Jale
         }
         public SqlConnection CrearConexion()
         {
