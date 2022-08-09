@@ -32,7 +32,7 @@ namespace Sistema.Datos
                 Cadena.ConnectionString = "Server=" + this.Servidor + ";Database=" + this.Base + ";";
                 if (this.Seguridad)
                 {
-                    Cadena.ConnectionString = Cadena.ConnectionString + "Integraded Security = SSPI";
+                    Cadena.ConnectionString = Cadena.ConnectionString + "Integrated Security = SSPI";
                 }
                 else
                 {
