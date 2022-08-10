@@ -181,7 +181,38 @@ namespace Sistema.Presentacion
 
         private void button2_Click(object sender, EventArgs e)
         {
+            try
+            {
+                DialogResult Opcion;
+                Opcion = MessageBox.Show("Desea DESACTIVAR los registros", "Sistema de Ventas", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (Opcion == DialogResult.OK)
+                {
+                    string Codigo;
+                    string Rpta = "";
+                    foreach (DataGridViewRow row in dgvListado.Rows)
+                    {
+                        if (Convert.ToBoolean(row.Cells[0].Value))
+                        {
+                            Codigo = Convert.ToString(row.Cells[1].Value);
+                            Rpta = NCategoria.Desactivar(Convert.ToInt32(Codigo));
+                            if (Rpta.Equals("OK"))
+                            {
+                                this.MensajeOk("Se desactivo el registro: " + Convert.ToString(row.Cells[2].Value));
+                            }
+                            else
+                            {
+                                this.MensajeError(Rpta);
+                            }
+                        }
+                    }
+                    this.Listar();
 
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + ex.StackTrace);
+            }
         }
 
         private void chkSeleccionar_CheckedChanged(object sender, EventArgs e)
@@ -204,11 +235,83 @@ namespace Sistema.Presentacion
 
         private void dgvListado_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex = dgvListado.Columns["Seleccionar"].Index)
+            if (e.ColumnIndex == dgvListado.Columns["Seleccionar"].Index)
             {
                 DataGridViewCheckBoxCell chkEliminar = (DataGridViewCheckBoxCell)dgvListado.Rows[e.RowIndex].Cells["Seleccionar"];
                 chkEliminar.Value =!Convert.ToBoolean(chkEliminar.Value);
 
+            }
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult Opcion;
+                Opcion = MessageBox.Show("Desea eliminar los registros", "Sistema de Ventas", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (Opcion == DialogResult.OK)
+                {
+                    string Codigo;
+                    string Rpta = "";
+                    foreach (DataGridViewRow row in dgvListado.Rows)
+                    {
+                        if (Convert.ToBoolean(row.Cells[0].Value))
+                        {
+                            Codigo = Convert.ToString(row.Cells[1].Value);
+                            Rpta = NCategoria.Eliminar(Convert.ToInt32(Codigo));
+                            if (Rpta.Equals("OK"))
+                            {
+                                this.MensajeOk("Se elimino el registro: " + Convert.ToString(row.Cells[2].Value));
+                            }
+                            else
+                            {
+                                this.MensajeError(Rpta);
+                            }
+                        }
+                    }
+                    this.Listar();
+
+                }
+            }
+            catch(Exception ex)
+            { 
+                MessageBox.Show(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void btnActivar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult Opcion;
+                Opcion = MessageBox.Show("Se ACTIVO los registros", "Sistema de Ventas", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (Opcion == DialogResult.OK)
+                {
+                    string Codigo;
+                    string Rpta = "";
+                    foreach (DataGridViewRow row in dgvListado.Rows)
+                    {
+                        if (Convert.ToBoolean(row.Cells[0].Value))
+                        {
+                            Codigo = Convert.ToString(row.Cells[1].Value);
+                            Rpta = NCategoria.Activar(Convert.ToInt32(Codigo));
+                            if (Rpta.Equals("OK"))
+                            {
+                                this.MensajeOk("Se activo el registro: " + Convert.ToString(row.Cells[2].Value));
+                            }
+                            else
+                            {
+                                this.MensajeError(Rpta);
+                            }
+                        }
+                    }
+                    this.Listar();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + ex.StackTrace);
             }
         }
     }
