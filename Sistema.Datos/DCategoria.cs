@@ -37,6 +37,36 @@ namespace Sistema.Datos
                 if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
             }
         }
+        public DataTable Seleccionar()
+        {
+            SqlDataReader Resultado;
+            DataTable Tabla = new DataTable();
+            SqlConnection SqlCon = new SqlConnection();
+            try
+            {
+                //Instanciamos la conexion
+                SqlCon = Conexion.getInstancia().CrearConexion();
+                //Llamamos el USP Categoria Listar
+                SqlCommand Comando = new SqlCommand("categoria_seleccionar", SqlCon);
+                //Indicamos que es de tipo SP
+                Comando.CommandType = CommandType.StoredProcedure;
+                //Abrimos la Conexion
+                SqlCon.Open();
+                //Ejecutamos el SP
+                Resultado = Comando.ExecuteReader();
+                //Cargamos la respuesta a la variable Tabla
+                Tabla.Load(Resultado);
+                return Tabla;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            }
+        }
         public DataTable Buscar(string Valor)
         {
             SqlDataReader Resultado;
