@@ -19,8 +19,8 @@ namespace Sistema.Datos
         private Conexion()
         {
             this.Base = "dbsistema";
-            this.Servidor = "DESKTOP-54P5F6N"; //Casa
-            //this.Servidor = "DESKTOP-DO5T73H"; //Jale
+            //this.Servidor = "DESKTOP-54P5F6N"; //Casa
+            this.Servidor = "DESKTOP-DO5T73H"; //Jale
             this.Usuario = "sa";
             this.Clave = "1234569";
             //this.Seguridad = true; //Casa

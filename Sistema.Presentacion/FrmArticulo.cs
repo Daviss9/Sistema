@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Sistema.Negocio;
 using System.Drawing.Imaging;
+using System.IO;
 
 namespace Sistema.Presentacion
 {
@@ -53,9 +54,16 @@ namespace Sistema.Presentacion
         private void Limpiar()
         {
             txtBuscar.Clear();
-            txtDescripcion.Clear();
             txtNombre.Clear();
             txtId.Clear();
+            txtCodigo.Clear();
+            panelCodigo.BackgroundImage = null;
+            btnGuardarCodigo.Enabled = false;
+            txtPrecioVenta.Clear();
+            txtStock.Clear();
+            txtImagen.Clear();
+            picImagen.Image = null;
+            txtDescripcion.Clear();
             btnInsertar.Visible = true;
             btnActualizar.Visible = false;
             errorIcono.Clear();
@@ -65,6 +73,11 @@ namespace Sistema.Presentacion
             btnDesactivar.Visible = false;
             btnEliminar.Visible = false;
             chkSeleccionar.Checked = false;
+
+            this.RutaDestino = "";
+            this.RutaOrigen = "";
+
+
         }
         private void MensajeError(string Mensaje)
         {
@@ -139,7 +152,7 @@ namespace Sistema.Presentacion
         {
             BarcodeLib.Barcode Codigo = new BarcodeLib.Barcode();
             Codigo.IncludeLabel = true;
-            panelCodigo.BackgroundImage = Codigo.Encode(BarcodeLib.TYPE.EAN13,txtCodigo.Text,Color.Black,Color.White,400,100);
+            panelCodigo.BackgroundImage = Codigo.Encode(BarcodeLib.TYPE.EAN13, StringToEncode: txtCodigo.Text,Color.Black,Color.White,400,100);
             btnGuardarCodigo.Enabled = true;
         }
 
@@ -155,6 +168,79 @@ namespace Sistema.Presentacion
                 imgFinal.Save(DialogoGuardar.FileName, ImageFormat.Png);
             }
             imgFinal.Dispose();
+        }
+
+        private void btnInsertar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string Rpta = "";
+                if ( cboCategoria.Text == string.Empty || txtNombre.Text == String.Empty || txtPrecioVenta.Text == String.Empty || txtStock.Text == String.Empty)
+                {
+                    this.MensajeError("Falta ingresar algunos datos, seran remarcados");
+                    errorIcono.SetError(cboCategoria, "Seleccione una categoria");
+                    errorIcono.SetError(txtNombre, "Ingrese un nombre");
+                    errorIcono.SetError(txtPrecioVenta, "Ingrese el precio de Venta");
+                    errorIcono.SetError(txtStock, "Ingrese el stock del Producto");
+                }
+                else
+                {
+                    Rpta = NArticulo.Insertar(Convert.ToInt32(cboCategoria.SelectedValue),txtCodigo.Text.Trim(),
+                        txtNombre.Text.Trim(),Convert.ToDecimal(txtPrecioVenta.Text),
+                        Convert.ToInt32(txtStock.Text), txtDescripcion.Text.Trim(),txtImagen.Text.Trim());
+                    if (Rpta.Equals("OK"))
+                    {
+                        this.MensajeOk("Se Inserto de forma correcta el Registro");
+                        if (txtImagen.Text != string.Empty)
+                        {
+                            this.RutaDestino = this.Directorio + txtImagen.Text;
+                            File.Copy(this.RutaOrigen,this.RutaDestino);
+                        }
+                        //this.Limpiar();Listar llama a Limpiar
+                        this.Listar();
+                    }
+                    else
+                    {
+                        this.MensajeError(Rpta);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void btnGenerarCodigo_Click_1(object sender, EventArgs e)
+        {
+            BarcodeLib.Barcode Codigo = new BarcodeLib.Barcode();
+            Codigo.IncludeLabel = true;
+            //Codigo EAN13, es obligatorio 13 digitos
+            if (txtCodigo.Text.Length == 13)
+            {
+                panelCodigo.BackgroundImage = Codigo.Encode(BarcodeLib.TYPE.EAN13, StringToEncode: txtCodigo.Text, Color.Black, Color.White, 400, 100);
+                btnGuardarCodigo.Enabled = true;
+            }
+            else
+            {
+                this.MensajeError("Ingrese codigo de barra (13 Digitos)");
+            }
+            
+        }
+
+        private void txtCodigo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+            (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

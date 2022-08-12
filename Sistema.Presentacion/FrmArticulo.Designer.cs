@@ -51,22 +51,27 @@
             this.tabGeneral = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label4 = new System.Windows.Forms.Label();
-            this.cboCategoria = new System.Windows.Forms.ComboBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtImagen = new System.Windows.Forms.TextBox();
-            this.btnCargarImagen = new System.Windows.Forms.Button();
-            this.picImagen = new System.Windows.Forms.PictureBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtCodigo = new System.Windows.Forms.TextBox();
-            this.btnGenerarCodigo = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnGuardarCodigo = new System.Windows.Forms.Button();
+            this.btnGenerarCodigo = new System.Windows.Forms.Button();
+            this.txtCodigo = new System.Windows.Forms.TextBox();
             this.panelCodigo = new System.Windows.Forms.Panel();
+            this.txtStock = new System.Windows.Forms.TextBox();
+            this.txtPrecioVenta = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.picImagen = new System.Windows.Forms.PictureBox();
+            this.btnCargarImagen = new System.Windows.Forms.Button();
+            this.txtImagen = new System.Windows.Forms.TextBox();
+            this.cboCategoria = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorIcono)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListado)).BeginInit();
             this.tabGeneral.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picImagen)).BeginInit();
             this.SuspendLayout();
@@ -123,7 +128,7 @@
             // 
             // btnActualizar
             // 
-            this.btnActualizar.Location = new System.Drawing.Point(120, 194);
+            this.btnActualizar.Location = new System.Drawing.Point(123, 236);
             this.btnActualizar.Name = "btnActualizar";
             this.btnActualizar.Size = new System.Drawing.Size(140, 23);
             this.btnActualizar.TabIndex = 8;
@@ -132,7 +137,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(266, 194);
+            this.btnCancelar.Location = new System.Drawing.Point(269, 207);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(102, 23);
             this.btnCancelar.TabIndex = 7;
@@ -141,18 +146,19 @@
             // 
             // btnInsertar
             // 
-            this.btnInsertar.Location = new System.Drawing.Point(122, 194);
+            this.btnInsertar.Location = new System.Drawing.Point(125, 207);
             this.btnInsertar.Name = "btnInsertar";
             this.btnInsertar.Size = new System.Drawing.Size(138, 23);
             this.btnInsertar.TabIndex = 6;
             this.btnInsertar.Text = "Insertar";
             this.btnInsertar.UseVisualStyleBackColor = true;
+            this.btnInsertar.Click += new System.EventHandler(this.btnInsertar_Click);
             // 
             // txtId
             // 
-            this.txtId.Location = new System.Drawing.Point(122, 223);
+            this.txtId.Location = new System.Drawing.Point(326, 136);
             this.txtId.Name = "txtId";
-            this.txtId.Size = new System.Drawing.Size(102, 20);
+            this.txtId.Size = new System.Drawing.Size(45, 20);
             this.txtId.TabIndex = 5;
             this.txtId.Visible = false;
             // 
@@ -164,23 +170,23 @@
             // 
             // txtDescripcion
             // 
-            this.txtDescripcion.Location = new System.Drawing.Point(122, 131);
+            this.txtDescripcion.Location = new System.Drawing.Point(127, 77);
             this.txtDescripcion.Multiline = true;
             this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new System.Drawing.Size(248, 57);
+            this.txtDescripcion.Size = new System.Drawing.Size(244, 57);
             this.txtDescripcion.TabIndex = 4;
             // 
             // txtNombre
             // 
-            this.txtNombre.Location = new System.Drawing.Point(122, 106);
+            this.txtNombre.Location = new System.Drawing.Point(127, 51);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(249, 20);
+            this.txtNombre.Size = new System.Drawing.Size(244, 20);
             this.txtNombre.TabIndex = 3;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(30, 181);
+            this.label3.Location = new System.Drawing.Point(28, 212);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(70, 13);
             this.label3.TabIndex = 2;
@@ -189,7 +195,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(34, 131);
+            this.label2.Location = new System.Drawing.Point(51, 80);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 13);
             this.label2.TabIndex = 1;
@@ -198,7 +204,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(33, 108);
+            this.label1.Location = new System.Drawing.Point(57, 51);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(57, 13);
             this.label1.TabIndex = 0;
@@ -261,11 +267,11 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.panelCodigo);
-            this.tabPage2.Controls.Add(this.btnGuardarCodigo);
-            this.tabPage2.Controls.Add(this.btnGenerarCodigo);
-            this.tabPage2.Controls.Add(this.txtCodigo);
-            this.tabPage2.Controls.Add(this.label5);
+            this.tabPage2.Controls.Add(this.groupBox2);
+            this.tabPage2.Controls.Add(this.txtStock);
+            this.tabPage2.Controls.Add(this.txtPrecioVenta);
+            this.tabPage2.Controls.Add(this.label7);
+            this.tabPage2.Controls.Add(this.label6);
             this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Controls.Add(this.cboCategoria);
             this.tabPage2.Controls.Add(this.label4);
@@ -286,6 +292,134 @@
             this.tabPage2.Text = "Mantenimiento";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.btnGuardarCodigo);
+            this.groupBox2.Controls.Add(this.btnGenerarCodigo);
+            this.groupBox2.Controls.Add(this.txtCodigo);
+            this.groupBox2.Controls.Add(this.panelCodigo);
+            this.groupBox2.Location = new System.Drawing.Point(377, 22);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(437, 160);
+            this.groupBox2.TabIndex = 24;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Codigo de Barra";
+            // 
+            // btnGuardarCodigo
+            // 
+            this.btnGuardarCodigo.Enabled = false;
+            this.btnGuardarCodigo.Location = new System.Drawing.Point(303, 20);
+            this.btnGuardarCodigo.Name = "btnGuardarCodigo";
+            this.btnGuardarCodigo.Size = new System.Drawing.Size(118, 23);
+            this.btnGuardarCodigo.TabIndex = 23;
+            this.btnGuardarCodigo.Text = "Guardar Codigo";
+            this.btnGuardarCodigo.UseVisualStyleBackColor = true;
+            // 
+            // btnGenerarCodigo
+            // 
+            this.btnGenerarCodigo.Location = new System.Drawing.Point(187, 20);
+            this.btnGenerarCodigo.Name = "btnGenerarCodigo";
+            this.btnGenerarCodigo.Size = new System.Drawing.Size(110, 23);
+            this.btnGenerarCodigo.TabIndex = 22;
+            this.btnGenerarCodigo.Text = "Generar Codigo";
+            this.btnGenerarCodigo.UseVisualStyleBackColor = true;
+            this.btnGenerarCodigo.Click += new System.EventHandler(this.btnGenerarCodigo_Click_1);
+            // 
+            // txtCodigo
+            // 
+            this.txtCodigo.Location = new System.Drawing.Point(16, 20);
+            this.txtCodigo.Name = "txtCodigo";
+            this.txtCodigo.Size = new System.Drawing.Size(165, 20);
+            this.txtCodigo.TabIndex = 21;
+            this.txtCodigo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodigo_KeyPress);
+            // 
+            // panelCodigo
+            // 
+            this.panelCodigo.Location = new System.Drawing.Point(16, 46);
+            this.panelCodigo.Name = "panelCodigo";
+            this.panelCodigo.Size = new System.Drawing.Size(405, 100);
+            this.panelCodigo.TabIndex = 20;
+            // 
+            // txtStock
+            // 
+            this.txtStock.Location = new System.Drawing.Point(127, 166);
+            this.txtStock.Name = "txtStock";
+            this.txtStock.Size = new System.Drawing.Size(100, 20);
+            this.txtStock.TabIndex = 23;
+            // 
+            // txtPrecioVenta
+            // 
+            this.txtPrecioVenta.Location = new System.Drawing.Point(127, 140);
+            this.txtPrecioVenta.Name = "txtPrecioVenta";
+            this.txtPrecioVenta.Size = new System.Drawing.Size(100, 20);
+            this.txtPrecioVenta.TabIndex = 22;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(73, 169);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(48, 13);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "Stock (*)";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(28, 143);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(93, 13);
+            this.label6.TabIndex = 20;
+            this.label6.Text = "Precio de Venta(*)";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.picImagen);
+            this.groupBox1.Controls.Add(this.btnCargarImagen);
+            this.groupBox1.Controls.Add(this.txtImagen);
+            this.groupBox1.Location = new System.Drawing.Point(829, 22);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(374, 350);
+            this.groupBox1.TabIndex = 14;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Imagen";
+            // 
+            // picImagen
+            // 
+            this.picImagen.Location = new System.Drawing.Point(26, 53);
+            this.picImagen.Name = "picImagen";
+            this.picImagen.Size = new System.Drawing.Size(329, 275);
+            this.picImagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picImagen.TabIndex = 15;
+            this.picImagen.TabStop = false;
+            // 
+            // btnCargarImagen
+            // 
+            this.btnCargarImagen.Location = new System.Drawing.Point(268, 21);
+            this.btnCargarImagen.Name = "btnCargarImagen";
+            this.btnCargarImagen.Size = new System.Drawing.Size(87, 23);
+            this.btnCargarImagen.TabIndex = 14;
+            this.btnCargarImagen.Text = "...";
+            this.btnCargarImagen.UseVisualStyleBackColor = true;
+            this.btnCargarImagen.Click += new System.EventHandler(this.btnCargarImagen_Click);
+            // 
+            // txtImagen
+            // 
+            this.txtImagen.Enabled = false;
+            this.txtImagen.Location = new System.Drawing.Point(26, 24);
+            this.txtImagen.Name = "txtImagen";
+            this.txtImagen.Size = new System.Drawing.Size(237, 20);
+            this.txtImagen.TabIndex = 13;
+            // 
+            // cboCategoria
+            // 
+            this.cboCategoria.FormattingEnabled = true;
+            this.cboCategoria.Location = new System.Drawing.Point(127, 24);
+            this.cboCategoria.Name = "cboCategoria";
+            this.cboCategoria.Size = new System.Drawing.Size(244, 21);
+            this.cboCategoria.TabIndex = 10;
+            this.cboCategoria.SelectedIndexChanged += new System.EventHandler(this.cboCategoria_SelectedIndexChanged);
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -295,103 +429,11 @@
             this.label4.TabIndex = 9;
             this.label4.Text = "Categoria";
             // 
-            // cboCategoria
-            // 
-            this.cboCategoria.FormattingEnabled = true;
-            this.cboCategoria.Location = new System.Drawing.Point(120, 16);
-            this.cboCategoria.Name = "cboCategoria";
-            this.cboCategoria.Size = new System.Drawing.Size(244, 21);
-            this.cboCategoria.TabIndex = 10;
-            this.cboCategoria.SelectedIndexChanged += new System.EventHandler(this.cboCategoria_SelectedIndexChanged);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.picImagen);
-            this.groupBox1.Controls.Add(this.btnCargarImagen);
-            this.groupBox1.Controls.Add(this.txtImagen);
-            this.groupBox1.Location = new System.Drawing.Point(853, 24);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(459, 342);
-            this.groupBox1.TabIndex = 14;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Imagen";
-            // 
-            // txtImagen
-            // 
-            this.txtImagen.Enabled = false;
-            this.txtImagen.Location = new System.Drawing.Point(25, 21);
-            this.txtImagen.Name = "txtImagen";
-            this.txtImagen.Size = new System.Drawing.Size(330, 20);
-            this.txtImagen.TabIndex = 13;
-            // 
-            // btnCargarImagen
-            // 
-            this.btnCargarImagen.Location = new System.Drawing.Point(361, 19);
-            this.btnCargarImagen.Name = "btnCargarImagen";
-            this.btnCargarImagen.Size = new System.Drawing.Size(75, 23);
-            this.btnCargarImagen.TabIndex = 14;
-            this.btnCargarImagen.Text = "...";
-            this.btnCargarImagen.UseVisualStyleBackColor = true;
-            this.btnCargarImagen.Click += new System.EventHandler(this.btnCargarImagen_Click);
-            // 
-            // picImagen
-            // 
-            this.picImagen.Location = new System.Drawing.Point(26, 53);
-            this.picImagen.Name = "picImagen";
-            this.picImagen.Size = new System.Drawing.Size(409, 275);
-            this.picImagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picImagen.TabIndex = 15;
-            this.picImagen.TabStop = false;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(26, 52);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(88, 13);
-            this.label5.TabIndex = 15;
-            this.label5.Text = "Codigo de Barras";
-            // 
-            // txtCodigo
-            // 
-            this.txtCodigo.Location = new System.Drawing.Point(120, 46);
-            this.txtCodigo.Name = "txtCodigo";
-            this.txtCodigo.Size = new System.Drawing.Size(244, 20);
-            this.txtCodigo.TabIndex = 16;
-            // 
-            // btnGenerarCodigo
-            // 
-            this.btnGenerarCodigo.Location = new System.Drawing.Point(120, 72);
-            this.btnGenerarCodigo.Name = "btnGenerarCodigo";
-            this.btnGenerarCodigo.Size = new System.Drawing.Size(110, 23);
-            this.btnGenerarCodigo.TabIndex = 17;
-            this.btnGenerarCodigo.Text = "Generar Codigo";
-            this.btnGenerarCodigo.UseVisualStyleBackColor = true;
-            this.btnGenerarCodigo.Click += new System.EventHandler(this.btnGenerarCodigo_Click);
-            // 
-            // btnGuardarCodigo
-            // 
-            this.btnGuardarCodigo.Enabled = false;
-            this.btnGuardarCodigo.Location = new System.Drawing.Point(246, 72);
-            this.btnGuardarCodigo.Name = "btnGuardarCodigo";
-            this.btnGuardarCodigo.Size = new System.Drawing.Size(118, 23);
-            this.btnGuardarCodigo.TabIndex = 18;
-            this.btnGuardarCodigo.Text = "Guardar Codigo";
-            this.btnGuardarCodigo.UseVisualStyleBackColor = true;
-            this.btnGuardarCodigo.Click += new System.EventHandler(this.btnGuardarCodigo_Click);
-            // 
-            // panelCodigo
-            // 
-            this.panelCodigo.Location = new System.Drawing.Point(394, 16);
-            this.panelCodigo.Name = "panelCodigo";
-            this.panelCodigo.Size = new System.Drawing.Size(405, 100);
-            this.panelCodigo.TabIndex = 19;
-            // 
             // FrmArticulo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1378, 546);
+            this.ClientSize = new System.Drawing.Size(1378, 474);
             this.Controls.Add(this.btnDesactivar);
             this.Controls.Add(this.btnActivar);
             this.Controls.Add(this.chkSeleccionar);
@@ -408,6 +450,8 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picImagen)).EndInit();
@@ -446,10 +490,14 @@
         private System.Windows.Forms.PictureBox picImagen;
         private System.Windows.Forms.Button btnCargarImagen;
         private System.Windows.Forms.TextBox txtImagen;
-        private System.Windows.Forms.Panel panelCodigo;
+        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnGuardarCodigo;
         private System.Windows.Forms.Button btnGenerarCodigo;
         private System.Windows.Forms.TextBox txtCodigo;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Panel panelCodigo;
+        private System.Windows.Forms.TextBox txtStock;
+        private System.Windows.Forms.TextBox txtPrecioVenta;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
     }
 }
