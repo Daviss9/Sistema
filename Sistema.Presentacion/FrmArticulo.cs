@@ -18,6 +18,7 @@ namespace Sistema.Presentacion
         private string RutaOrigen;
         private string RutaDestino;
         private string Directorio= "C:\\SistemaCS\\imagen\\";
+        private string nombreAnt;
         public FrmArticulo()
         {
             InitializeComponent();
@@ -240,6 +241,225 @@ namespace Sistema.Presentacion
             if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void dgvListado_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                this.Limpiar();
+                btnActualizar.Visible = true;
+                btnInsertar.Visible = false;
+                txtId.Text = Convert.ToString(dgvListado.CurrentRow.Cells["ID"].Value);
+                cboCategoria.SelectedValue = Convert.ToString(dgvListado.CurrentRow.Cells["idcategoria"].Value);
+                txtCodigo.Text= Convert.ToString(dgvListado.CurrentRow.Cells["Codigo"].Value);
+                this.nombreAnt = Convert.ToString(dgvListado.CurrentRow.Cells["Nombre"].Value);
+                txtNombre.Text = Convert.ToString(dgvListado.CurrentRow.Cells["Nombre"].Value);
+                txtPrecioVenta.Text = Convert.ToString(dgvListado.CurrentRow.Cells["Precio_Venta"].Value);
+                txtStock.Text = Convert.ToString(dgvListado.CurrentRow.Cells["Stock"].Value);
+                txtDescripcion.Text = Convert.ToString(dgvListado.CurrentRow.Cells["Descripcion"].Value);
+                string Imagen;
+                Imagen = Convert.ToString(dgvListado.CurrentRow.Cells["Imagen"].Value);
+                if (Imagen != string.Empty)
+                {
+                    picImagen.Image = Image.FromFile(this.Directorio + Imagen);
+                    txtImagen.Text = Imagen;
+                }
+                else 
+                {
+                    picImagen.Image = null;
+                    txtImagen.Text = "";
+                }
+                tabGeneral.SelectedIndex = 1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Seleccione desde la celda nombre." + "| Error: "+ ex.Message);
+            }
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string Rpta = "";
+                if (txtId.Text == string.Empty || cboCategoria.Text == string.Empty || txtNombre.Text == string.Empty || txtPrecioVenta.Text == string.Empty || txtStock.Text == string.Empty)
+                {
+                    this.MensajeError("Falta ingresar algunos datos, serán remarcados.");
+                    errorIcono.SetError(cboCategoria, "Seleccione una categoría.");
+                    errorIcono.SetError(txtNombre, "Ingrese un nombre.");
+                    errorIcono.SetError(txtPrecioVenta, "Ingrese un precio.");
+                    errorIcono.SetError(txtStock, "Ingrese un stock inicial.");
+                }
+                else
+                {
+                    Rpta = NArticulo.Actualizar(Convert.ToInt32(txtId.Text), Convert.ToInt32(cboCategoria.SelectedValue), txtCodigo.Text.Trim(), this.nombreAnt, txtNombre.Text.Trim(), Convert.ToDecimal(txtPrecioVenta.Text), Convert.ToInt32(txtStock.Text), txtDescripcion.Text.Trim(), txtImagen.Text.Trim());
+                    if (Rpta.Equals("OK"))
+                    {
+                        this.MensajeOk("Se actualizó de forma correcta el registro");
+                        if (txtImagen.Text != string.Empty && this.RutaOrigen != string.Empty)
+                        {
+                            this.RutaDestino = this.Directorio + txtImagen.Text;
+                            File.Copy(this.RutaOrigen, this.RutaDestino);
+                        }
+                        this.Listar();
+                        tabGeneral.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        this.MensajeError(Rpta);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            this.Limpiar();
+            tabGeneral.SelectedIndex = 0;
+        }
+
+        private void dgvListado_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == dgvListado.Columns["Seleccionar"].Index)
+            {
+                DataGridViewCheckBoxCell chkEliminar = (DataGridViewCheckBoxCell)dgvListado.Rows[e.RowIndex].Cells["Seleccionar"];
+                chkEliminar.Value = !Convert.ToBoolean(chkEliminar.Value);
+
+            }
+        }
+
+        private void chkSeleccionar_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkSeleccionar.Checked)
+            {
+                dgvListado.Columns[0].Visible = true;
+                btnActivar.Visible = true;
+                btnDesactivar.Visible = true;
+                btnEliminar.Visible = true;
+            }
+            else
+            {
+                dgvListado.Columns[0].Visible = false;
+                btnActivar.Visible = false;
+                btnDesactivar.Visible = false;
+                btnEliminar.Visible = false;
+            }
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult Opcion;
+                Opcion = MessageBox.Show("Desea eliminar los registros", "Sistema de Ventas", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (Opcion == DialogResult.OK)
+                {
+                    string Codigo;
+                    string Rpta = "";
+                    string Imagen = "";
+                    foreach (DataGridViewRow row in dgvListado.Rows)
+                    {
+                        if (Convert.ToBoolean(row.Cells[0].Value))
+                        {
+                            Codigo = Convert.ToString(row.Cells[1].Value);
+                            Imagen = Convert.ToString(row.Cells[9].Value);
+                            Rpta = NArticulo.Eliminar(Convert.ToInt32(Codigo));
+                            if (Rpta.Equals("OK"))
+                            {
+                                this.MensajeOk("Se elimino el registro: " + Convert.ToString(row.Cells[5].Value));
+                                File.Delete(this.Directorio + Imagen);
+                            }
+                            else
+                            {
+                                this.MensajeError(Rpta);
+                            }
+                        }
+                    }
+                    this.Listar();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void btnDesactivar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult Opcion;
+                Opcion = MessageBox.Show("Desea DESACTIVAR los registros", "Sistema de Ventas", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (Opcion == DialogResult.OK)
+                {
+                    string Codigo;
+                    string Rpta = "";
+                    foreach (DataGridViewRow row in dgvListado.Rows)
+                    {
+                        if (Convert.ToBoolean(row.Cells[0].Value))
+                        {
+                            Codigo = Convert.ToString(row.Cells[1].Value);
+                            Rpta = NArticulo.Desactivar(Convert.ToInt32(Codigo));
+                            if (Rpta.Equals("OK"))
+                            {
+                                this.MensajeOk("Se desactivo el registro: " + Convert.ToString(row.Cells[5].Value));
+                            }
+                            else
+                            {
+                                this.MensajeError(Rpta);
+                            }
+                        }
+                    }
+                    this.Listar();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void btnActivar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult Opcion;
+                Opcion = MessageBox.Show("Desea DESACTIVAR los registros", "Sistema de Ventas", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (Opcion == DialogResult.OK)
+                {
+                    string Codigo;
+                    string Rpta = "";
+                    foreach (DataGridViewRow row in dgvListado.Rows)
+                    {
+                        if (Convert.ToBoolean(row.Cells[0].Value))
+                        {
+                            Codigo = Convert.ToString(row.Cells[1].Value);
+                            Rpta = NArticulo.Activar(Convert.ToInt32(Codigo));
+                            if (Rpta.Equals("OK"))
+                            {
+                                this.MensajeOk("Se desactivo el registro: " + Convert.ToString(row.Cells[5].Value));
+                            }
+                            else
+                            {
+                                this.MensajeError(Rpta);
+                            }
+                        }
+                    }
+                    this.Listar();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + ex.StackTrace);
             }
         }
     }

@@ -149,7 +149,7 @@ namespace Sistema.Datos
             try
             {
                 SqlCon = Conexion.getInstancia().CrearConexion();
-                SqlCommand Comando = new SqlCommand("categoria_actualizar", SqlCon);
+                SqlCommand Comando = new SqlCommand("articulo_actualizar", SqlCon);
                 Comando.CommandType = CommandType.StoredProcedure;
                 //Indicamos que el SP espera parametros Nombre y Descripcion para realizar la consulta, tipo Varchar, Este value llega de la capa Negocios
                 Comando.Parameters.Add("@idarticulo", SqlDbType.Int).Value = Obj.IdArticulo;
