@@ -75,6 +75,47 @@ namespace Sistema.Datos
                 if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
             }
         }
+ // create proc usuario_login
+ //   @email varchar(50),
+	//@clave varchar(50)
+	//as
+	//select u.idusuario, u.idrol, r.nombre as rol, u.nombre, u.estado from usuario u inner join rol r on u.idrol = r.idrol
+ //   where u.email= @email and u.clave= HASHBYTES('SHA2_256', @clave)
+ //   go
+        public DataTable Login(string Email, string Clave)
+        {
+            SqlDataReader Resultado;
+            DataTable Tabla = new DataTable();
+            SqlConnection SqlCon = new SqlConnection();
+            try
+            {
+                //Instanciamos la conexion
+                SqlCon = Conexion.getInstancia().CrearConexion();
+                //Llamamos el USP Categoria Listar
+                SqlCommand Comando = new SqlCommand("usuario_login", SqlCon);
+                //Indicamos que es de tipo SP
+                Comando.CommandType = CommandType.StoredProcedure;
+                //Indicamos que el SP espera parametros para realizar la consulta, tipo Varchar, Este value llega de la capa Negocios
+                Comando.Parameters.Add("@email", SqlDbType.VarChar).Value = Email;
+                Comando.Parameters.Add("@clave", SqlDbType.VarChar).Value = Clave;
+                //Abrimos la Conexion
+                SqlCon.Open();
+                //Ejecutamos el SP
+                Resultado = Comando.ExecuteReader();
+                //Cargamos la respuesta a la variable Tabla
+                Tabla.Load(Resultado);
+                return Tabla;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            }
+        }
 
         public string Existe(string Valor)
         {

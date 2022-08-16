@@ -13,7 +13,11 @@ namespace Sistema.Presentacion
     public partial class FrmPrincipal : Form
     {
         private int childFormNumber = 0;
-
+        public int IdUsuario;
+        public int IdRol;
+        public string Nombre;
+        public string Rol;
+        public bool Estado;
         public FrmPrincipal()
         {
             InitializeComponent();
@@ -73,7 +77,7 @@ namespace Sistema.Presentacion
 
         private void StatusBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            statusStrip.Visible = statusBarToolStripMenuItem.Checked;
+            stBarraInferior.Visible = statusBarToolStripMenuItem.Checked;
         }
 
         private void CascadeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -130,6 +134,80 @@ namespace Sistema.Presentacion
             FrmUsuario frm = new FrmUsuario();
             frm.MdiParent = this;
             frm.Show();
+        }
+
+        private void menuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void FrmPrincipal_Load(object sender, EventArgs e)
+        {
+            //stBarraInferior.Text = "Desarrollado por el Dpto de Farmacia, Usuario: " +this.Nombre;
+            tslblUsuario.Text = "Desarrollado por el Dpto de Farmacia, Usuario: " + this.Nombre;
+            MessageBox.Show("Bienvenido: " + this.Nombre, "Sistema de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (this.Rol.Equals("Administrador"))
+            {
+                MnuAlmacen.Enabled = true;
+                MnuIngresos.Enabled = true;
+                MnuVentas.Enabled = true;
+                MnuAccesos.Enabled = true;
+                MnuConsultas.Enabled = true;
+                tsCompras.Enabled = true;
+                tsVentas.Enabled = true;
+            }
+            else 
+            {
+                if (this.Rol.Equals("Vendedor"))
+                {
+                    MnuAlmacen.Enabled = false;
+                    MnuIngresos.Enabled = false;
+                    MnuVentas.Enabled = true;
+                    MnuAccesos.Enabled = false;
+                    MnuConsultas.Enabled = false;
+                    tsCompras.Enabled = false;
+                    tsVentas.Enabled = true;
+                }
+                else
+                {
+                    if (this.Rol.Equals("Almacenero"))
+                    {
+                        MnuAlmacen.Enabled = true;
+                        MnuIngresos.Enabled = true;
+                        MnuVentas.Enabled = false;
+                        MnuAccesos.Enabled = false;
+                        MnuConsultas.Enabled = true;
+                        tsCompras.Enabled = true;
+                        tsVentas.Enabled = false;
+                    }
+                    else 
+                    {
+                        MnuAlmacen.Enabled = false;
+                        MnuIngresos.Enabled = false;
+                        MnuVentas.Enabled = false;
+                        MnuAccesos.Enabled = false;
+                        MnuConsultas.Enabled = false;
+                        tsCompras.Enabled = false;
+                        tsVentas.Enabled =false;
+                    }
+                }
+            }
+        }
+
+        private void FrmPrincipal_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void salirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult Opcion;
+            Opcion = MessageBox.Show("Deseas salir del Sistema?", "Sistema de Ventas", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (Opcion == DialogResult.OK)
+            {
+                Application.Exit();
+            }
+            
         }
     }
 }
