@@ -1,6 +1,6 @@
 ﻿namespace Sistema.Presentacion
 {
-    partial class FrmProveedor
+    partial class FrmCliente
     {
         /// <summary>
         /// Required designer variable.
@@ -41,6 +41,8 @@
             this.dgvListado = new System.Windows.Forms.DataGridView();
             this.Seleccionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.txtEmail = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.btnActualizar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnInsertar = new System.Windows.Forms.Button();
@@ -55,8 +57,6 @@
             this.errorIcono = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnEliminar = new System.Windows.Forms.Button();
             this.lblTotal = new System.Windows.Forms.Label();
-            this.txtEmail = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListado)).BeginInit();
             this.tabPage2.SuspendLayout();
@@ -198,6 +198,22 @@
             this.tabPage2.Text = "Mantenimiento";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // txtEmail
+            // 
+            this.txtEmail.Location = new System.Drawing.Point(130, 184);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(242, 20);
+            this.txtEmail.TabIndex = 21;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(84, 187);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(32, 13);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "Email";
+            // 
             // btnActualizar
             // 
             this.btnActualizar.Location = new System.Drawing.Point(124, 280);
@@ -323,23 +339,7 @@
             this.lblTotal.TabIndex = 13;
             this.lblTotal.Text = "Total";
             // 
-            // txtEmail
-            // 
-            this.txtEmail.Location = new System.Drawing.Point(130, 184);
-            this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(242, 20);
-            this.txtEmail.TabIndex = 21;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(84, 187);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(32, 13);
-            this.label8.TabIndex = 20;
-            this.label8.Text = "Email";
-            // 
-            // FrmProveedor
+            // FrmCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -348,9 +348,9 @@
             this.Controls.Add(this.tabGeneral);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.lblTotal);
-            this.Name = "FrmProveedor";
-            this.Text = "Proveedores";
-            this.Load += new System.EventHandler(this.FrmProveedor_Load);
+            this.Name = "FrmCliente";
+            this.Text = "Cliente";
+            this.Load += new System.EventHandler(this.FrmCliente_Load);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListado)).EndInit();

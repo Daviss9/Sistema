@@ -4,10 +4,10 @@ using System.Windows.Forms;
 
 namespace Sistema.Presentacion
 {
-    public partial class FrmProveedor : Form
+    public partial class FrmCliente : Form
     {
         private string nombreAnt;       
-        public FrmProveedor()
+        public FrmCliente()
         {
             InitializeComponent();
         }
@@ -17,7 +17,7 @@ namespace Sistema.Presentacion
             try
             {
 
-                dgvListado.DataSource = NPersona.ListarProveedores();
+                dgvListado.DataSource = NPersona.ListarClientes();
                 this.Formato();
                 this.Limpiar();
                 lblTotal.Text = "Total Registros: " + Convert.ToString(dgvListado.Rows.Count);
@@ -32,7 +32,7 @@ namespace Sistema.Presentacion
             try
             {
 
-                dgvListado.DataSource = NPersona.BuscarProveedores(txtBuscar.Text);
+                dgvListado.DataSource = NPersona.BuscarClientes(txtBuscar.Text);
                 this.Formato();
                 lblTotal.Text = "Total Registros: " + Convert.ToString(dgvListado.Rows.Count);
             }
@@ -82,10 +82,6 @@ namespace Sistema.Presentacion
             dgvListado.Columns[7].HeaderText = "Telefono";
             dgvListado.Columns[8].Width = 110;
         }
-        private void FrmProveedor_Load(object sender, EventArgs e)
-        {
-            this.Listar();
-        }
 
         private void btnInsertar_Click(object sender, EventArgs e)
         {
@@ -100,11 +96,11 @@ namespace Sistema.Presentacion
                 }
                 else
                 {
-                    Rpta = NPersona.Insertar("PROVEEDOR",txtNombre.Text.Trim(), Convert.ToString(cboTipoDocumento.Text),
+                    Rpta = NPersona.Insertar("CLIENTE",txtNombre.Text.Trim(), Convert.ToString(cboTipoDocumento.Text),
                         txtNumDocumento.Text.Trim(), txtDireccion.Text.Trim(), txtTelefono.Text.Trim(), txtEmail.Text.Trim());
                     if (Rpta.Equals("OK"))
                     {
-                        this.MensajeOk("Se Inserto el Proveedor de forma correcta el Registro");
+                        this.MensajeOk("Se Inserto el Cliente de forma correcta el Registro");
                         this.Listar();
                     }
                     else
@@ -156,7 +152,7 @@ namespace Sistema.Presentacion
                 }
                 else
                 {
-                    Rpta = NPersona.Actualizar(Convert.ToInt32(txtId.Text),"PROVEEDOR",this.nombreAnt, txtNombre.Text.Trim(), Convert.ToString(cboTipoDocumento.Text),
+                    Rpta = NPersona.Actualizar(Convert.ToInt32(txtId.Text),"CLIENTE",this.nombreAnt, txtNombre.Text.Trim(), Convert.ToString(cboTipoDocumento.Text),
                         txtNumDocumento.Text.Trim(), txtDireccion.Text.Trim(), txtTelefono.Text.Trim(), txtEmail.Text.Trim());
                     if (Rpta.Equals("OK"))
                     {
@@ -239,6 +235,11 @@ namespace Sistema.Presentacion
             {
                 MessageBox.Show(ex.Message + ex.StackTrace);
             }
+        }
+
+        private void FrmCliente_Load(object sender, EventArgs e)
+        {
+            this.Listar();
         }
     }
 }

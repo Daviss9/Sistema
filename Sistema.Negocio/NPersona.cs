@@ -37,7 +37,7 @@ namespace Sistema.Negocio
             DPersona Datos = new DPersona();
             return Datos.BuscarClientes(Valor);
         }
-        public static string Insertar(string TipoPersona, string Nombre, string TipoDocumento, string NumDocumento, string Direccion, string Telefono, string Email, string Clave)
+        public static string Insertar(string TipoPersona, string Nombre, string TipoDocumento, string NumDocumento, string Direccion, string Telefono, string Email)
         {
             DPersona Datos = new DPersona();
             String Existe = Datos.Existe(Nombre);
