@@ -12,6 +12,7 @@ namespace Sistema.Presentacion
 {
     public partial class FrmIngreso : Form
     {
+        private DataTable dtDetalle = new DataTable();
         public FrmIngreso()
         {
             InitializeComponent();
@@ -49,8 +50,8 @@ namespace Sistema.Presentacion
         private void Limpiar()
         {
             txtBuscar.Clear();
-            txtDescripcion.Clear();
-            txtNombre.Clear();
+            //txtDescripcion.Clear();
+            //txtNombre.Clear();
             txtId.Clear();
 
             btnInsertar.Visible = true;
@@ -87,14 +88,52 @@ namespace Sistema.Presentacion
             dgvListado.Columns[10].Width = 100;
             dgvListado.Columns[11].Width = 100;
         }
+
+        private void CrearTabla()
+        {
+            this.dtDetalle.Columns.Add("idArticulo", System.Type.GetType("System.Int32"));
+            this.dtDetalle.Columns.Add("Codigo", System.Type.GetType("System.String"));
+            this.dtDetalle.Columns.Add("Articulo", System.Type.GetType("System.String"));
+            this.dtDetalle.Columns.Add("Cantidad", System.Type.GetType("System.Int32"));
+            this.dtDetalle.Columns.Add("Precio", System.Type.GetType("System.Decimal"));
+            this.dtDetalle.Columns.Add("Importe", System.Type.GetType("System.Decimal"));
+
+            dgvDetalle.DataSource = this.dtDetalle;
+
+            dgvDetalle.Columns[0].Visible = false;
+            dgvDetalle.Columns[1].HeaderText = "CODIGO";
+            dgvDetalle.Columns[1].Width = 100;
+            dgvDetalle.Columns[2].HeaderText = "ARTICULO";
+            dgvDetalle.Columns[2].Width = 300;
+            dgvDetalle.Columns[3].HeaderText = "CANTIDAD";
+            dgvDetalle.Columns[3].Width = 100;
+            dgvDetalle.Columns[4].HeaderText = "PRECIO";
+            dgvDetalle.Columns[4].Width = 100;
+            dgvDetalle.Columns[5].HeaderText = "IMPORTE";
+            dgvDetalle.Columns[5].Width = 100;
+
+            dgvDetalle.Columns[1].ReadOnly = true; //codigo solo lectura
+            dgvDetalle.Columns[2].ReadOnly = true; //articulo solo lectura
+            dgvDetalle.Columns[5].ReadOnly = true; //importe solo lectura
+        }
         private void FrmIngreso_Load(object sender, EventArgs e)
         {
             this.Listar();
+            this.CrearTabla();
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             this.Buscar();
+        }
+
+        private void btnBuscarProveedor_Click(object sender, EventArgs e)
+        {
+
+            FrmVista_ProveedorIngreso vista = new FrmVista_ProveedorIngreso();
+            vista.ShowDialog();
+            txtIdProveedor.Text = Convert.ToString(Variables.IdProveedor);
+            txtNombreProveedor.Text = Variables.NombreProveedor;
         }
     }
 }

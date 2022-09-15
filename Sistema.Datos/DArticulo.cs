@@ -71,6 +71,45 @@ namespace Sistema.Datos
             }
         }
 
+        public DataTable BuscarCodigo(string Valor)
+        {
+            SqlDataReader Resultado;
+            DataTable Tabla = new DataTable();
+            SqlConnection SqlCon = new SqlConnection();
+            try
+            {
+                //Instanciamos la conexion
+                SqlCon = Conexion.getInstancia().CrearConexion();
+                //Llamamos el USP Categoria Listar
+                SqlCommand Comando = new SqlCommand("articulo_buscar_codigo", SqlCon);
+                //Indicamos que es de tipo SP
+                Comando.CommandType = CommandType.StoredProcedure;
+                //Indicamos que el SP espera parametros para realizar la consulta, tipo Varchar, Este value llega de la capa Negocios
+                Comando.Parameters.Add("@valor", SqlDbType.VarChar).Value = Valor;
+                //Abrimos la Conexion
+                SqlCon.Open();
+                //Ejecutamos el SP
+                Resultado = Comando.ExecuteReader();
+                //Cargamos la respuesta a la variable Tabla
+                Tabla.Load(Resultado);
+                return Tabla;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            }
+//              create proc articulo_buscar_codigo
+//              @valor varchar(50)
+//              as
+//              select idarticulo,codigo,nombre,precio_venta,stock from articulo
+//              where codigo = @valor
+//              go
+        }
+
         public string Existe(string Valor)
         {
             string Rpta = "";
