@@ -76,6 +76,7 @@ namespace Sistema.Presentacion
         {
             Variables.IdProveedor = Convert.ToInt32(dgvListado.CurrentRow.Cells["ID"].Value);
             Variables.NombreProveedor = Convert.ToString(dgvListado.CurrentRow.Cells["Nombre"].Value);
+            Variables.NumeroRuc = Convert.ToString(dgvListado.CurrentRow.Cells["Num_Documento"].Value);
             this.Close();
         }
     }

@@ -132,8 +132,64 @@ namespace Sistema.Presentacion
 
             FrmVista_ProveedorIngreso vista = new FrmVista_ProveedorIngreso();
             vista.ShowDialog();
+            //Una vez Cerrada la vista buscar proveedor, rellena las variables
             txtIdProveedor.Text = Convert.ToString(Variables.IdProveedor);
+            //txtIdProveedor.Text = Convert.ToString(Variables.IdProveedor);
+            txtNumeroRuc.Text = Variables.NumeroRuc;
             txtNombreProveedor.Text = Variables.NombreProveedor;
+            //txtNombreProveedor.Text = Variables.NombreProveedor;
+        }
+
+        private void txtCodigo_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtCodigo_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (e.KeyCode == Keys.Enter)
+                { 
+                    //Evaluo si el usuario presiona Enter
+                    DataTable Tabla = new DataTable();
+                    Tabla = NArticulo.BuscarCodigo(txtCodigo.Text.Trim());
+                    if (Tabla.Rows.Count <= 0)
+                    {
+                        this.MensajeOk("No existe el codigo de Barras");
+                    }
+                    else
+                    {
+                        //Agregar Detalle
+                        this.AgregarDetalle(
+                            //id
+                            Convert.ToInt32(Tabla.Rows[0][0]),
+                            //Codigo
+                            Convert.ToString(Tabla.Rows[0][1]),
+                            //Nombre
+                            Convert.ToString(Tabla.Rows[0][2]),
+                            //Precio
+                            Convert.ToDecimal(Tabla.Rows[0][3])
+                            );
+                    }   
+
+                }
+            }
+            catch (Exception ex)
+            { 
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void AgregarDetalle(int IdArticulo,string Codigo,string Nombre,decimal Precio)
+        {
+            DataRow Fila = dtDetalle.NewRow();
+            Fila["idarticulo"] = IdArticulo;
+            Fila["codigo"] = Codigo;
+            Fila["articulo"] = Nombre;
+            Fila["cantidad"] = 1;
+            Fila["precio"] = Precio;
+            Fila["importe"] = Precio;
+            this.dtDetalle.Rows.Add(Fila);
         }
     }
 }

@@ -5,5 +5,6 @@
         public static int IdUsuario;
         public static int IdProveedor;
         public static string NombreProveedor;
+        public static string NumeroRuc;
     }
 }
