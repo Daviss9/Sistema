@@ -89,6 +89,22 @@ namespace Sistema.Presentacion
             dgvListado.Columns[11].Width = 100;
         }
 
+        private void FormatoArticulos()
+        {
+            dgvArticulos.Columns[1].Visible = false;
+            dgvArticulos.Columns[1].Width = 50;
+            dgvArticulos.Columns[2].Width = 100;
+            dgvArticulos.Columns[2].HeaderText = "Categoria";
+            dgvArticulos.Columns[3].Width = 100;
+            dgvArticulos.Columns[3].HeaderText = "Codigo";
+            dgvArticulos.Columns[4].Width = 150;
+            dgvArticulos.Columns[5].Width = 100;
+            dgvArticulos.Columns[5].HeaderText = "Precio Venta";
+            dgvArticulos.Columns[6].Width = 60;
+            dgvArticulos.Columns[7].Width = 200;
+            dgvArticulos.Columns[7].HeaderText = "Descripcion";
+            dgvArticulos.Columns[8].Width = 100;
+        }
         private void CrearTabla()
         {
             this.dtDetalle.Columns.Add("idArticulo", System.Type.GetType("System.Int32"));
@@ -182,14 +198,88 @@ namespace Sistema.Presentacion
         }
         private void AgregarDetalle(int IdArticulo,string Codigo,string Nombre,decimal Precio)
         {
-            DataRow Fila = dtDetalle.NewRow();
-            Fila["idarticulo"] = IdArticulo;
-            Fila["codigo"] = Codigo;
-            Fila["articulo"] = Nombre;
-            Fila["cantidad"] = 1;
-            Fila["precio"] = Precio;
-            Fila["importe"] = Precio;
-            this.dtDetalle.Rows.Add(Fila);
+            bool Agregar = true;
+
+            foreach (DataRow FilaTemp in dtDetalle.Rows)
+            {
+                if (Convert.ToInt32(FilaTemp["idarticulo"]) == IdArticulo)
+                {
+                    Agregar = false;
+                    this.MensajeError("El Articulo ya ha sido agregado");
+                }
+            }
+
+            if (Agregar)
+            {
+                DataRow Fila = dtDetalle.NewRow();
+                Fila["idarticulo"] = IdArticulo;
+                Fila["codigo"] = Codigo;
+                Fila["articulo"] = Nombre;
+                Fila["cantidad"] = 1;
+                Fila["precio"] = Precio;
+                Fila["importe"] = Precio;
+                this.dtDetalle.Rows.Add(Fila);
+                this.CalcularTotales();
+            }
+        }
+
+        private void CalcularTotales()
+        {
+            decimal Total = 0;
+            decimal SubTotal = 0;
+            foreach (DataRow FilaTemp in dtDetalle.Rows)
+            {
+                Total = Total + Convert.ToDecimal(FilaTemp["importe"]);
+            }
+            SubTotal = Total/(1+Convert.ToDecimal(txtImpuesto.Text));
+            txtTotal.Text = Total.ToString("#0.00#");
+            txtSubTotal.Text = SubTotal.ToString("#0.00#");
+            txtTotalImpuesto.Text = (Total-SubTotal).ToString("#0.00#");
+        }
+        private void btnVerArticulo_Click(object sender, EventArgs e)
+        {
+            pnlArticulo.Visible = true;
+        }
+
+        private void btnCerrarArticulo_Click(object sender, EventArgs e)
+        {
+            pnlArticulo.Visible=false;
+        }
+
+        private void btnFiltrarArticulos_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                dgvArticulos.DataSource = NArticulo.Buscar(txtBuscarArticulo.Text.Trim());
+                this.FormatoArticulos();
+                lblTotalArticulos.Text = "Total Registros: " + Convert.ToString(dgvArticulos.Rows.Count);
+            }
+            catch(Exception ex) 
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void dgvArticulos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int IdArticulo;
+            string Codigo, Nombre;
+            decimal Precio;
+            IdArticulo = Convert.ToInt32(dgvArticulos.CurrentRow.Cells["ID"].Value);
+            Codigo = Convert.ToString(dgvArticulos.CurrentRow.Cells["Codigo"].Value);
+            Nombre = Convert.ToString(dgvArticulos.CurrentRow.Cells["Nombre"].Value);
+            Precio = Convert.ToDecimal(dgvArticulos.CurrentRow.Cells["Precio_Venta"].Value);
+            this.AgregarDetalle(IdArticulo,Codigo,Nombre,Precio);
+        }
+
+        private void dgvDetalle_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            DataRow Fila = (DataRow)dtDetalle.Rows[e.RowIndex];
+            decimal Precio = Convert.ToDecimal(Fila["precio"]);
+            int Cantidad = Convert.ToInt32(Fila["cantidad"]);
+            Fila["importe"] = Precio*Cantidad;
+            this.CalcularTotales(); 
+
         }
     }
 }

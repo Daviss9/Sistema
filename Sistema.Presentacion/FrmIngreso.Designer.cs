@@ -42,15 +42,22 @@
             this.dgvListado = new System.Windows.Forms.DataGridView();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.pnlArticulo = new System.Windows.Forms.Panel();
+            this.lblTotalArticulos = new System.Windows.Forms.Label();
+            this.dgvArticulos = new System.Windows.Forms.DataGridView();
+            this.btnCerrarArticulo = new System.Windows.Forms.Button();
+            this.btnFiltrarArticulos = new System.Windows.Forms.Button();
+            this.txtBuscarArticulo = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.txtTotal = new System.Windows.Forms.TextBox();
+            this.txtTotalImpuesto = new System.Windows.Forms.TextBox();
+            this.txtSubTotal = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.dgvDetalle = new System.Windows.Forms.DataGridView();
-            this.btnBuscarArticulo = new System.Windows.Forms.Button();
+            this.btnVerArticulo = new System.Windows.Forms.Button();
             this.txtCodigo = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -73,6 +80,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvListado)).BeginInit();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.pnlArticulo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetalle)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -191,6 +200,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.pnlArticulo);
             this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Controls.Add(this.btnCancelar);
@@ -204,16 +214,92 @@
             this.tabPage2.Text = "Mantenimiento";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // pnlArticulo
+            // 
+            this.pnlArticulo.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.pnlArticulo.Controls.Add(this.lblTotalArticulos);
+            this.pnlArticulo.Controls.Add(this.dgvArticulos);
+            this.pnlArticulo.Controls.Add(this.btnCerrarArticulo);
+            this.pnlArticulo.Controls.Add(this.btnFiltrarArticulos);
+            this.pnlArticulo.Controls.Add(this.txtBuscarArticulo);
+            this.pnlArticulo.Controls.Add(this.label11);
+            this.pnlArticulo.Location = new System.Drawing.Point(74, 188);
+            this.pnlArticulo.Name = "pnlArticulo";
+            this.pnlArticulo.Size = new System.Drawing.Size(949, 277);
+            this.pnlArticulo.TabIndex = 10;
+            this.pnlArticulo.Visible = false;
+            // 
+            // lblTotalArticulos
+            // 
+            this.lblTotalArticulos.AutoSize = true;
+            this.lblTotalArticulos.Location = new System.Drawing.Point(754, 249);
+            this.lblTotalArticulos.Name = "lblTotalArticulos";
+            this.lblTotalArticulos.Size = new System.Drawing.Size(34, 13);
+            this.lblTotalArticulos.TabIndex = 5;
+            this.lblTotalArticulos.Text = "Total:";
+            // 
+            // dgvArticulos
+            // 
+            this.dgvArticulos.AllowUserToAddRows = false;
+            this.dgvArticulos.AllowUserToDeleteRows = false;
+            this.dgvArticulos.AllowUserToOrderColumns = true;
+            this.dgvArticulos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvArticulos.Location = new System.Drawing.Point(15, 42);
+            this.dgvArticulos.Name = "dgvArticulos";
+            this.dgvArticulos.ReadOnly = true;
+            this.dgvArticulos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvArticulos.Size = new System.Drawing.Size(920, 197);
+            this.dgvArticulos.TabIndex = 4;
+            this.dgvArticulos.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvArticulos_CellDoubleClick);
+            // 
+            // btnCerrarArticulo
+            // 
+            this.btnCerrarArticulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCerrarArticulo.ForeColor = System.Drawing.Color.Red;
+            this.btnCerrarArticulo.Location = new System.Drawing.Point(892, 11);
+            this.btnCerrarArticulo.Name = "btnCerrarArticulo";
+            this.btnCerrarArticulo.Size = new System.Drawing.Size(44, 19);
+            this.btnCerrarArticulo.TabIndex = 3;
+            this.btnCerrarArticulo.Text = "X";
+            this.btnCerrarArticulo.UseVisualStyleBackColor = true;
+            this.btnCerrarArticulo.Click += new System.EventHandler(this.btnCerrarArticulo_Click);
+            // 
+            // btnFiltrarArticulos
+            // 
+            this.btnFiltrarArticulos.Location = new System.Drawing.Point(572, 11);
+            this.btnFiltrarArticulos.Name = "btnFiltrarArticulos";
+            this.btnFiltrarArticulos.Size = new System.Drawing.Size(121, 19);
+            this.btnFiltrarArticulos.TabIndex = 2;
+            this.btnFiltrarArticulos.Text = "Buscar";
+            this.btnFiltrarArticulos.UseVisualStyleBackColor = true;
+            this.btnFiltrarArticulos.Click += new System.EventHandler(this.btnFiltrarArticulos_Click);
+            // 
+            // txtBuscarArticulo
+            // 
+            this.txtBuscarArticulo.Location = new System.Drawing.Point(98, 11);
+            this.txtBuscarArticulo.Name = "txtBuscarArticulo";
+            this.txtBuscarArticulo.Size = new System.Drawing.Size(457, 20);
+            this.txtBuscarArticulo.TabIndex = 1;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(14, 14);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(78, 13);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Buscar Articulo";
+            // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.textBox9);
-            this.groupBox2.Controls.Add(this.textBox8);
-            this.groupBox2.Controls.Add(this.textBox7);
+            this.groupBox2.Controls.Add(this.txtTotal);
+            this.groupBox2.Controls.Add(this.txtTotalImpuesto);
+            this.groupBox2.Controls.Add(this.txtSubTotal);
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.dgvDetalle);
-            this.groupBox2.Controls.Add(this.btnBuscarArticulo);
+            this.groupBox2.Controls.Add(this.btnVerArticulo);
             this.groupBox2.Controls.Add(this.txtCodigo);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Location = new System.Drawing.Point(29, 131);
@@ -223,32 +309,32 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Detalle";
             // 
-            // textBox9
+            // txtTotal
             // 
-            this.textBox9.Enabled = false;
-            this.textBox9.Location = new System.Drawing.Point(679, 268);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.ReadOnly = true;
-            this.textBox9.Size = new System.Drawing.Size(100, 20);
-            this.textBox9.TabIndex = 27;
+            this.txtTotal.Enabled = false;
+            this.txtTotal.Location = new System.Drawing.Point(679, 268);
+            this.txtTotal.Name = "txtTotal";
+            this.txtTotal.ReadOnly = true;
+            this.txtTotal.Size = new System.Drawing.Size(100, 20);
+            this.txtTotal.TabIndex = 27;
             // 
-            // textBox8
+            // txtTotalImpuesto
             // 
-            this.textBox8.Enabled = false;
-            this.textBox8.Location = new System.Drawing.Point(679, 242);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.ReadOnly = true;
-            this.textBox8.Size = new System.Drawing.Size(100, 20);
-            this.textBox8.TabIndex = 26;
+            this.txtTotalImpuesto.Enabled = false;
+            this.txtTotalImpuesto.Location = new System.Drawing.Point(679, 242);
+            this.txtTotalImpuesto.Name = "txtTotalImpuesto";
+            this.txtTotalImpuesto.ReadOnly = true;
+            this.txtTotalImpuesto.Size = new System.Drawing.Size(100, 20);
+            this.txtTotalImpuesto.TabIndex = 26;
             // 
-            // textBox7
+            // txtSubTotal
             // 
-            this.textBox7.Enabled = false;
-            this.textBox7.Location = new System.Drawing.Point(679, 215);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.ReadOnly = true;
-            this.textBox7.Size = new System.Drawing.Size(100, 20);
-            this.textBox7.TabIndex = 19;
+            this.txtSubTotal.Enabled = false;
+            this.txtSubTotal.Location = new System.Drawing.Point(679, 215);
+            this.txtSubTotal.Name = "txtSubTotal";
+            this.txtSubTotal.ReadOnly = true;
+            this.txtSubTotal.Size = new System.Drawing.Size(100, 20);
+            this.txtSubTotal.TabIndex = 19;
             // 
             // label10
             // 
@@ -287,15 +373,17 @@
             this.dgvDetalle.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvDetalle.Size = new System.Drawing.Size(760, 147);
             this.dgvDetalle.TabIndex = 22;
+            this.dgvDetalle.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDetalle_CellEndEdit);
             // 
-            // btnBuscarArticulo
+            // btnVerArticulo
             // 
-            this.btnBuscarArticulo.Location = new System.Drawing.Point(573, 31);
-            this.btnBuscarArticulo.Name = "btnBuscarArticulo";
-            this.btnBuscarArticulo.Size = new System.Drawing.Size(158, 23);
-            this.btnBuscarArticulo.TabIndex = 21;
-            this.btnBuscarArticulo.Text = "Buscar Articulo";
-            this.btnBuscarArticulo.UseVisualStyleBackColor = true;
+            this.btnVerArticulo.Location = new System.Drawing.Point(573, 31);
+            this.btnVerArticulo.Name = "btnVerArticulo";
+            this.btnVerArticulo.Size = new System.Drawing.Size(158, 23);
+            this.btnVerArticulo.TabIndex = 21;
+            this.btnVerArticulo.Text = "Ver Listado Articulo";
+            this.btnVerArticulo.UseVisualStyleBackColor = true;
+            this.btnVerArticulo.Click += new System.EventHandler(this.btnVerArticulo_Click);
             // 
             // txtCodigo
             // 
@@ -490,6 +578,9 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.pnlArticulo.ResumeLayout(false);
+            this.pnlArticulo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetalle)).EndInit();
@@ -518,14 +609,13 @@
         private System.Windows.Forms.Button btnInsertar;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox txtTotal;
+        private System.Windows.Forms.TextBox txtTotalImpuesto;
+        private System.Windows.Forms.TextBox txtSubTotal;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.DataGridView dgvDetalle;
-        private System.Windows.Forms.Button btnBuscarArticulo;
         private System.Windows.Forms.TextBox txtCodigo;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -543,5 +633,13 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.TextBox txtNumeroRuc;
+        private System.Windows.Forms.Panel pnlArticulo;
+        private System.Windows.Forms.Button btnVerArticulo;
+        private System.Windows.Forms.Label lblTotalArticulos;
+        private System.Windows.Forms.DataGridView dgvArticulos;
+        private System.Windows.Forms.Button btnCerrarArticulo;
+        private System.Windows.Forms.Button btnFiltrarArticulos;
+        private System.Windows.Forms.TextBox txtBuscarArticulo;
+        private System.Windows.Forms.Label label11;
     }
 }
