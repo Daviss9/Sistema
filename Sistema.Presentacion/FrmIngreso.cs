@@ -50,13 +50,19 @@ namespace Sistema.Presentacion
         private void Limpiar()
         {
             txtBuscar.Clear();
-            //txtDescripcion.Clear();
-            //txtNombre.Clear();
             txtId.Clear();
+            txtCodigo.Clear();
+            txtIdProveedor.Clear();
+            txtNombreProveedor.Clear();
+            txtSerieComprobante.Clear();
+            txtNumComprobante.Clear();
+            dtDetalle.Clear();
+            txtSubTotal.Text = "0.00";
+            txtTotalImpuesto.Text = "0.00";
+            txtTotal.Text = "0.00";
 
-            btnInsertar.Visible = true;
+            
             errorIcono.Clear();
-
             dgvListado.Columns[0].Visible = false;
             btnAnular.Visible = false;
             chkSeleccionar.Checked = false;
@@ -227,9 +233,16 @@ namespace Sistema.Presentacion
         {
             decimal Total = 0;
             decimal SubTotal = 0;
-            foreach (DataRow FilaTemp in dtDetalle.Rows)
+            if (dgvDetalle.Rows.Count == 0)
             {
-                Total = Total + Convert.ToDecimal(FilaTemp["importe"]);
+                Total = 0;
+            }
+            else
+            {
+                foreach (DataRow FilaTemp in dtDetalle.Rows)
+                {
+                    Total = Total + Convert.ToDecimal(FilaTemp["importe"]);
+                }
             }
             SubTotal = Total/(1+Convert.ToDecimal(txtImpuesto.Text));
             txtTotal.Text = Total.ToString("#0.00#");
@@ -280,6 +293,82 @@ namespace Sistema.Presentacion
             Fila["importe"] = Precio*Cantidad;
             this.CalcularTotales(); 
 
+        }
+
+        private void dgvDetalle_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            this.CalcularTotales();
+        }
+
+        private void btnInsertar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string Rpta = "";
+                if (txtIdProveedor.Text == String.Empty||txtImpuesto.Text==String.Empty||txtNumComprobante.Text ==string.Empty||dtDetalle.Rows.Count==0)
+                {
+                    this.MensajeError("Falta ingresar algunos datos, seran remarcados");
+                    errorIcono.SetError(txtIdProveedor, "Seleccione un proveedor.");
+                    errorIcono.SetError(txtImpuesto, "Ingrese el impuesto");
+                    errorIcono.SetError(txtNumComprobante, "Ingrese el Nro de Comprobante");
+                    errorIcono.SetError(dgvDetalle, "Ingrese al menos 1 detalle");
+                }
+                else
+                {
+                    Rpta = NIngreso.Insertar(Convert.ToInt32(txtIdProveedor.Text),Variables.IdUsuario,cboComprobante.Text, txtSerieComprobante.Text.Trim(),
+                        txtNumComprobante.Text.Trim(),Convert.ToDecimal(txtImpuesto.Text),Convert.ToDecimal(txtTotal.Text),dtDetalle);
+                    if (Rpta.Equals("OK"))
+                    {
+                        this.MensajeOk("Se Inserto de forma correcta el Registro");
+                        this.Limpiar();
+                        this.Listar();
+                    }
+                    else
+                    {
+                        this.MensajeError(Rpta);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void btnFiltrarArticulos_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                dgvArticulos.DataSource = NArticulo.Buscar(txtBuscarArticulo.Text.Trim());
+                this.FormatoArticulos();
+                lblTotalArticulos.Text = "Total Registros: " + Convert.ToString(dgvArticulos.Rows.Count);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnCerrarArticulo_Click_1(object sender, EventArgs e)
+        {
+            pnlArticulo.Visible = false;
+        }
+
+        private void dgvArticulos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dgvArticulos_CellDoubleClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            int IdArticulo;
+            string Codigo, Nombre;
+            decimal Precio;
+            IdArticulo = Convert.ToInt32(dgvArticulos.CurrentRow.Cells["ID"].Value);
+            Codigo = Convert.ToString(dgvArticulos.CurrentRow.Cells["Codigo"].Value);
+            Nombre = Convert.ToString(dgvArticulos.CurrentRow.Cells["Nombre"].Value);
+            Precio = Convert.ToDecimal(dgvArticulos.CurrentRow.Cells["Precio_Venta"].Value);
+            this.AgregarDetalle(IdArticulo, Codigo, Nombre, Precio);
         }
     }
 }

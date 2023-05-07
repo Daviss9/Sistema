@@ -89,8 +89,9 @@ namespace Sistema.Datos
                 Comando.Parameters.Add("@detalle", SqlDbType.Structured).Value = Obj.Detalles;
                 //Abrimos la Conexion
                 SqlCon.Open();
+                Comando.ExecuteNonQuery();
                 //Ejecutamos el SP, usamos el If Ternario, para indicar si se guardo o no
-                Rpta = Comando.ExecuteNonQuery() == 1 ? "OK" : "No se pudo guardar el Registro";
+                Rpta = "OK";
             }
             catch (Exception ex)
             {

@@ -43,6 +43,7 @@ namespace Sistema.Presentacion
                     else
                     {
                         FrmPrincipal Frm = new FrmPrincipal();
+                        Variables.IdUsuario = Convert.ToInt32(Tabla.Rows[0][0]);
                         Frm.IdUsuario = Convert.ToInt32(Tabla.Rows[0][0]);
                         Frm.IdRol = Convert.ToInt32(Tabla.Rows[0][1]);
                         Frm.Rol = Convert.ToString(Tabla.Rows[0][2]);
